@@ -40,7 +40,7 @@ implements Brain {
         super(w, h);
         brainActive = true;
         previousCount = count;
-        brains = new JediMindTrick();
+        brains = new DJBrain();
         gamesPlayed = 0;
         drop = true;
         myOpponent = this; //new Sith(false);
@@ -125,7 +125,7 @@ implements Brain {
 
         // if row clearing is going to happen, draw the
         // whole board so the green row shows up
-        //if (result ==  Board.PLACE_ROW_FILLED) 
+        //if (result ==  Board.PLACE_ROW_FILLED)
             //repaint();
 
         boolean failed = (result >= Board.PLACE_OUT_BOUNDS);
@@ -189,7 +189,7 @@ implements Brain {
             // feed all of the pieces to the adversary
             board.commit();
             mov = myOpponent.bestMove(board, piece, HEIGHT, null);
-            if (mov != null) 
+            if (mov != null)
                 score = mov.score;
             pieceNum = 0;
             for (int i = 1; i < pieces.length; i++) {
@@ -231,7 +231,7 @@ implements Brain {
         //System.out.println(Double.toString(delta/100.0) + " seconds");
         gamesPlayed++;
     }
-    
+
         /**
     Sets the internal state and starts the timer
     so the game is happening.
@@ -244,19 +244,19 @@ implements Brain {
         gameOn = true;
         gamePieces = 0;
 
-        if (testMode) 
+        if (testMode)
             random = new Random(0); // same seq every time
-        else 
+        else
             random = new Random(); // diff seq each game
 
         addNewPiece();
- 
+
         startTime = System.currentTimeMillis();
         while (gameOn) {
             tick(DOWN);
         }
     }
-    
+
     public int getPieces() {
         return gamePieces;
     }
@@ -320,6 +320,27 @@ implements Brain {
         }
     }
 
+    public static int maxHeightWeight = 8;
+    public static int heightDiffWeight = 30;
+    public static int avgHeightWeight = 40;
+    public static int numHolesWeight = 50;
+
+    public void changeMaxHeightWeight(int i) {
+        maxHeightWeight = i;
+    }
+
+    public void changeHeightDiffWeight(int i) {
+        heightDiffWeight = i;
+    }
+
+    public void changeAvgHeightWeight(int i) {
+        avgHeightWeight = i;
+    }
+
+    public void changeNumHolesWeight(int i) {
+        numHolesWeight = i;
+    }
+
     /*
     A simple brain function.
     Given a board, produce a number that rates
@@ -327,24 +348,30 @@ implements Brain {
     This version just counts the height
     and the number of "holes" in the board.
     See Tetris-Architecture.html for brain ideas.
-     */
+    */
     public double rateBoard(Board board) {
         final int width = board.getWidth();
         final int maxHeight = board.getMaxHeight();
 
         int sumHeight = 0;
-        int holes = 0;
+        int numHoles = 0;
+        int minHeight = board.getHeight();
 
         // Count the holes, and sum up the heights
-        for (int x=0; x<width; x++) {
+        for (int x = 0; x < width; x++) {
             final int colHeight = board.getColumnHeight(x);
             sumHeight += colHeight;
+
+            if (colHeight < minHeight) {
+                minHeight = colHeight;
+            }
+
 
             int y = colHeight - 2; // addr of first possible hole
 
             while (y>=0) {
-                if  (!board.getGrid(x,y)) {
-                    holes++;
+                if (!board.getGrid(x,y)) {
+                    numHoles++;
                 }
                 y--;
             }
@@ -352,10 +379,13 @@ implements Brain {
 
         double avgHeight = ((double)sumHeight)/width;
 
+        int heightDiff = maxHeight - minHeight;
+
+
         // Add up the counts to make an overall score
         // The weights, 8, 40, etc., are just made up numbers that appear to work
-        return (8*maxHeight + 40*avgHeight + 1.25*holes); 
+        return (maxHeightWeight*maxHeight + avgHeightWeight*avgHeight + numHolesWeight*numHoles + heightDiffWeight*heightDiff);
     }
 
-  
+
 }

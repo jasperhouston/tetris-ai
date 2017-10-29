@@ -1,2 +1,6 @@
 #BlueJ class context
-numComments=0
+comment0.target=Brain
+comment1.params=board\ piece\ limitHeight\ move
+comment1.target=Brain.Move\ bestMove(Board,\ Piece,\ int,\ Brain.Move)
+comment1.text=\n\ \ Given\ a\ piece\ and\ a\ board,\ returns\ a\ move\ object\ that\ represents\n\ \ the\ best\ play\ for\ that\ piece,\ or\ returns\ null\ if\ no\ play\ is\ possible.\n\ \ The\ board\ should\ be\ in\ the\ committed\ state\ when\ this\ is\ called.\n\ \ "limitHeight"\ is\ the\ bottom\ section\ of\ the\ board\ that\ where\ pieces\ must\n\ \ \ come\ to\ rest\ --\ typically\ 20.\n\ \ If\ the\ passed\ in\ move\ is\ non-null,\ it\ is\ used\ to\ hold\ the\ result\n\ \ (just\ to\ save\ the\ memory\ allocation).\n
+numComments=2
