@@ -9,20 +9,16 @@ good the resulting board is and it just remembers the
 play with the lowest score. Undo() is used to back-out
 each play before trying the next. To experiment with writing your own
 brain -- just subclass off LameBrain and override rateBoard().
-*/
+ */
 
 public class DJBrain implements Brain {
     /**
     Given a piece and a board, returns a move object that represents
     the best play for that piece, or returns null if no play is possible.
     See the Brain interface for details.
-    */
+     */
 
-    public static int maxHeightWeight = 8;
-    public static int heightDiffWeight = 30;
-    public static int avgHeightWeight = 40;
-    public static int numHolesWeight = 50;
-
+    public static Brain.Weights weights = new Brain.Weights();
 
     public Brain.Move bestMove(Board board, Piece piece, int limitHeight, Brain.Move move) {
         // Allocate a move object if necessary
@@ -74,23 +70,6 @@ public class DJBrain implements Brain {
             return(move);
         }
     }
-
-    public void changeMaxHeightWeight(int i) {
-        maxHeightWeight = i;
-    }
-
-    public void changeHeightDiffWeight(int i) {
-        heightDiffWeight = i;
-    }
-
-    public void changeAvgHeightWeight(int i) {
-        avgHeightWeight = i;
-    }
-
-    public void changeNumHolesWeight(int i) {
-        numHolesWeight = i;
-    }
-
     /*
     A simple brain function.
     Given a board, produce a number that rates
@@ -98,13 +77,14 @@ public class DJBrain implements Brain {
     This version just counts the height
     and the number of "holes" in the board.
     See Tetris-Architecture.html for brain ideas.
-    */
+     */
     public double rateBoard(Board board) {
         final int width = board.getWidth();
         final int maxHeight = board.getMaxHeight();
 
         int sumHeight = 0;
         int numHoles = 0;
+        int numTiles = 0;
         int minHeight = board.getHeight();
 
         // Count the holes, and sum up the heights
@@ -116,25 +96,31 @@ public class DJBrain implements Brain {
                 minHeight = colHeight;
             }
 
-
             int y = colHeight - 2; // addr of first possible hole
-
             while (y>=0) {
                 if (!board.getGrid(x,y)) {
                     numHoles++;
                 }
                 y--;
             }
+            y = colHeight;
+            while (y>=0) {
+                if (board.getGrid(x,y)) {
+                    numTiles++;
+                }
+                y--;
+            }
+            
         }
 
         double avgHeight = ((double)sumHeight)/width;
 
         int heightDiff = maxHeight - minHeight;
 
-
         // Add up the counts to make an overall score
         // The weights, 8, 40, etc., are just made up numbers that appear to work
-        return (maxHeightWeight*maxHeight + avgHeightWeight*avgHeight + numHolesWeight*numHoles + heightDiffWeight*heightDiff);
+        return (weights.maxHeightWeight*maxHeight + weights.avgHeightWeight*avgHeight + 
+            weights.numHolesWeight*numHoles + weights.heightDiffWeight*heightDiff + 
+            weights.numTilesWeight*numTiles);
     }
-
 }

@@ -1,7 +1,7 @@
 #BlueJ class context
-comment0.target=JBrainNoGraphics
-comment1.params=w\ h
-comment1.target=JBrainNoGraphics(int,\ int)
+comment0.target=DJBrainNoGraphics
+comment1.params=w\ h\ w1\ w2\ w3\ w4\ w5
+comment1.target=DJBrainNoGraphics(int,\ int,\ double,\ double,\ double,\ double,\ double)
 comment10.params=i
 comment10.target=void\ changeHeightDiffWeight(int)
 comment11.params=i

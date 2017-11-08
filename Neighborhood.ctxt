@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.target=Neighborhood
+comment1.params=dimension
+comment1.target=Neighborhood(int)
+comment2.params=x
+comment2.target=void\ add(Particle)
+comment3.params=
+comment3.target=void\ updateBest()
+comment4.params=
+comment4.target=void\ reset()
+numComments=5
