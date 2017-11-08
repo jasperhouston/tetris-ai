@@ -103,9 +103,9 @@ public class PSO {
             double pAttract = ThreadLocalRandom.current().nextDouble(0, 1) * PHI_1 * (swarm.get(index).pBest.get(i) - swarm.get(index).position.get(i));
 
             // get this particle's neighborhood best
-            Vector<Double> partBestPosition = neighborhoodList.get(index).pBest;
+            Vector<Double> neighbBestPosition = neighborhoodList.get(index).pBest;
             // attraction from neighborhood best
-            double nAttract = ThreadLocalRandom.current().nextDouble(0, 1) * PHI_2 * (partBestPosition.get(i) - swarm.get(index).position.get(i));
+            double nAttract = ThreadLocalRandom.current().nextDouble(0, 1) * PHI_2 * (neighbBestPosition.get(i) - swarm.get(index).position.get(i));
             double velChange = pAttract + nAttract;
             swarm.get(index).velocity.set(i, swarm.get(index).velocity.get(i) + velChange);
             swarm.get(index).velocity.set(i, swarm.get(index).velocity.get(i) * constrict);
@@ -221,7 +221,7 @@ public class PSO {
         /******************************************************/
 
         //update the personal best value if necessary
-        if (pVal < p.pBestValue) {
+        if (pVal > p.pBestValue) {
             swarm.get(index).pBest = p.position;
             swarm.get(index).pBestValue = pVal;
         }
@@ -254,7 +254,6 @@ public class PSO {
     /* general algorithm controller */
     public Vector<Double> solvePSO() {
         System.out.println("Solving PSO...");
-        Vector<Double> vect = new Vector<Double>();
 
         initializeSwarm();
         initializeNeighborhoods();
@@ -273,11 +272,10 @@ public class PSO {
 
             updateRandomNeighborhood();
             System.out.println("gBest = " + gBestValue + " iteration " + (iterations - iterRemaining) + " \n");
-            vect.add(gBestValue);
 
             iterRemaining--;
         }
 
-        return vect;
+        return gBest;
     }
 }
