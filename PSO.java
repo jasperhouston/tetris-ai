@@ -44,14 +44,14 @@ public class PSO {
     numHoles: 1-20 (double?)
     numTiles: 1-20 (double?)
      */
-    public double[] maxHeightInitList = {1.0, 20.0};
-    public double[] heightDiffInitList = {1.0, 20.0};
-    public double[] avgHeightInitList = {1.0, 20.0};
-    public double[] numHolesInitList = {1.0, 20.0};
-    public double[] numTilesInitList = {1.0, 20.0};
+    public double[] maxHeightInitList = {0.0, 1.0};
+    public double[] heightDiffInitList = {0.0, 1.0};
+    public double[] avgHeightInitList = {0.0, 1.0};
+    public double[] numHolesInitList = {0.0, 1.0};
+    public double[] numTilesInitList = {0.0, 1.0};
 
-    private double PHI_1 = 2.05;
-    private double PHI_2 = 2.05;
+    private double PHI_1 = .6;
+    private double PHI_2 = .85;
 
     public PSO(int swarmSize, int iterations) {
         this.swarmSize = swarmSize;
@@ -202,10 +202,10 @@ public class PSO {
         double avgHeightWeight = p.position.get(2);
         double numHolesWeight = p.position.get(3);
         double numTilesWeight = p.position.get(4);
-
+        //System.out.println(maxHeightWeight + " " + heightDiffWeight + " " + avgHeightWeight + " " + numHolesWeight + " " + numTilesWeight);
         // TODO here we need to run an evaluation
         final int pixels = 16;
-        final double trials = 100.0;
+        final double trials = 50.0;
         DJBrainNoGraphics tetris = new DJBrainNoGraphics(WIDTH*pixels+2, (HEIGHT+TOP_SPACE)*pixels+2, 
             maxHeightWeight, heightDiffWeight, avgHeightWeight, numHolesWeight, numTilesWeight);
             
@@ -215,6 +215,7 @@ public class PSO {
         for (int i = 0; i < trials; i++) {
             tetris.startGame();
             totalPieces += (double)tetris.getPieces();
+            
         }
         pVal = totalPieces / trials;
         
@@ -272,7 +273,7 @@ public class PSO {
 
             updateRandomNeighborhood();
             System.out.println("gBest = " + gBestValue + " iteration " + (iterations - iterRemaining) + " \n");
-
+            
             iterRemaining--;
         }
 

@@ -41,6 +41,7 @@ implements Brain {
         brainActive = true;
         previousCount = count;
         brains = new DJBrain();
+        DJBrain.weights.setWeights(w1, w2, w3, w4, w5);
         gamesPlayed = 0;
         drop = true;
         myOpponent = this; //new Sith(false);
