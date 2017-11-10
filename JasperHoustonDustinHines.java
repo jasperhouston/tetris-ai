@@ -1,5 +1,5 @@
 /**
-A simple Brain implementation.
+A Brain implementation created by Jasper Houston and Dustin Hines.
 bestMove() iterates through all the possible x values
 and rotations to play a particular piece (there are only
 around 10-30 ways to play a piece).
@@ -13,7 +13,7 @@ brain -- just subclass off LameBrain and override rateBoard().
 
 import static java.lang.Math.*;
 
-public class DJBrain implements Brain {
+public class JasperHoustonDustinHines implements Brain {
     /**
     Given a piece and a board, returns a move object that represents
     the best play for that piece, or returns null if no play is possible.
@@ -72,6 +72,7 @@ public class DJBrain implements Brain {
             return(move);
         }
     }
+
     /*
     A simple brain function.
     Given a board, produce a number that rates
@@ -119,7 +120,7 @@ public class DJBrain implements Brain {
                 compLines++;
             }
         }
-        
+
         int bumpiness = 0;
         for (int x = 0; x < width - 1; x++) {
             int colHeight = board.getColumnHeight(x);
@@ -127,20 +128,51 @@ public class DJBrain implements Brain {
             int diff = abs(colHeight - nextColHeight);
             bumpiness += diff;
         }
-        
-        
-        double avgHeight = ((double)aggrHeight)/width;
 
         int heightDiff = maxHeight - minHeight;
-        
-        
-        // Add up the counts to make an overall score
-        double boardRating = (weights.maxHeightWeight*maxHeight + 
-            weights.numHolesWeight*numHoles + weights.heightDiffWeight*heightDiff + 
-            weights.aggrHeightWeight*aggrHeight +
-            weights.compLinesWeight*compLines + weights.bumpinessWeight*bumpiness);
 
+        /*
+         * -0.48066488265545804 
+         * 0.10157950528082726 
+         * -0.9180123175701203 
+         * -0.982131790252937 
+         * -0.6003651108181332 
+         * 0.8978072509941408  
+         */
+
+        // comment this block out when training
+
+        weights.maxHeightWeight = .07;
+        weights.numHolesWeight = .40;
+        weights.heightDiffWeight = .01;
+        weights.aggrHeightWeight = .02;
+        weights.compLinesWeight = -.50;
+        weights.bumpinessWeight = .05;
+
+        /*
+        return (-0.44346902440765756*maxHeight + 0.39527698322920757*avgHeight + 
+        0.5447275743312467*numHoles + -0.6381522785249643*heightDiff + 
+        -0.1691071165301019*numTiles + 0.8802180907013148*aggrHeight +
+        -0.7601478234756451*compLines + 0.7922777950537594*bumpiness);
+         */
+        /*
+        weights.setWeights(-0.44346902440765756, 0.39527698322920757, 0.5447275743312467, -0.6381522785249643, 
+        -0.1691071165301019, 0.8802180907013148, -0.7601478234756451, 0.7922777950537594);
+         */ 
+        /*
+        System.out.println("Max Height: " + maxHeight);
+        System.out.println("Num Holes: " + numHoles);
+        System.out.println("Height Difference: " + heightDiff);
+        System.out.println("Aggregate Height: " + aggrHeight);
+        System.out.println("Complete lines: " + compLines);
+        System.out.println("bumpiness: " + bumpiness);
+        */
+        // Add up the counts to make an overall score
+        double boardRating = (weights.maxHeightWeight*maxHeight + weights.numHolesWeight*numHoles +
+                weights.heightDiffWeight*heightDiff + weights.aggrHeightWeight*aggrHeight +
+                weights.compLinesWeight*compLines + weights.bumpinessWeight*bumpiness);
+        //System.out.println(boardRating);
         return (boardRating);
-        
+
     }
 }

@@ -22,9 +22,7 @@ public class Neighborhood {
     /****   Dimension order:
     maximum column height (maxHeight)
     difference between min and max column height (heightDiff)
-    average column height (avgHeight)
     number of holes (numHoles)
-    number of tiles (numTiles)
     aggregate height (aggrHeight)
     complete lines (compLines)
     bumpiness measure (bumpiness)
@@ -32,18 +30,14 @@ public class Neighborhood {
     /****   Initial value ranges:
     maxHeight: -1 to 1 (double)
     heightDiff: -1 to 1 (double)
-    avgHeight: -1 to 1 (double)
     numHoles: -1 to 1 (double)
-    numTiles: -1 to 1 (double)
     aggrHeight: -1 to 1 (double)
     compLines: -1 to 1 (double)
     bumpiness: -1 to 1 (double)
      */
     public double[] maxHeightInitList = {-1.0, 1.0};
     public double[] heightDiffInitList = {-1.0, 1.0};
-    public double[] avgHeightInitList = {-1.0, 1.0};
     public double[] numHolesInitList = {-1.0, 1.0};
-    public double[] numTilesInitList = {-1.0, 1.0};
     public double[] aggrHeightInitList = {-1.0, 1.0};
     public double[] compLinesInitList = {-1.0, 1.0};
     public double[] bumpinessInitList = {-1.0, 1.0};   
@@ -71,22 +65,10 @@ public class Neighborhood {
         posRandom = total * ratio + heightDiffInitList[0];
         pBest.add(posRandom);
 
-        //avgHeightWeight
-        total = avgHeightInitList[1] - avgHeightInitList[0];
-        ratio = ThreadLocalRandom.current().nextDouble(0, 1);
-        posRandom = total * ratio + avgHeightInitList[0];
-        pBest.add(posRandom);
-
         //numHolesWeight
         total = numHolesInitList[1] - numHolesInitList[0];
         ratio = ThreadLocalRandom.current().nextDouble(0, 1);
         posRandom = total * ratio + numHolesInitList[0];
-        pBest.add(posRandom);
-
-        //numTilesWeight
-        total = numTilesInitList[1] - numTilesInitList[0];
-        ratio = ThreadLocalRandom.current().nextDouble(0, 1);
-        posRandom = total * ratio + numTilesInitList[0];
         pBest.add(posRandom);
         
         //aggrHeightWeight

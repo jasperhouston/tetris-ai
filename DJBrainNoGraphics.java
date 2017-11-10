@@ -3,7 +3,6 @@ A simple Brain implementation.
 bestMove() iterates through all the possible x values
 and rotations to play a particular piece (there are only
 around 10-30 ways to play a piece).
-
 For each play, it uses the rateBoard() message to rate how
 good the resulting board is and it just remembers the
 play with the lowest score. Undo() is used to back-out
@@ -36,12 +35,12 @@ implements Brain {
     public final int MAXGAMES = 10000;
     public final boolean OPTIMIZING = true;
 
-    public DJBrainNoGraphics(int w, int h, double w1, double w2, double w3, double w4, double w5, double w6, double w7, double w8) {
+    public DJBrainNoGraphics(int w, int h, double w1, double w2, double w3, double w4, double w5, double w6) {
         super(w, h);
         brainActive = true;
         previousCount = count;
         brains = new DJBrain();
-        DJBrain.weights.setWeights(w1, w2, w3, w4, w5, w6, w7, w8);
+        DJBrain.weights.setWeights(w1, w2, w3, w4, w5, w6);
         gamesPlayed = 0;
         drop = true;
         myOpponent = this; //new Sith(false);
@@ -61,10 +60,8 @@ implements Brain {
     LEFT RIGHT ROTATE DROP for the user moves,
     and the timer calls it with the verb DOWN to move
     the piece down one square.
-
     Before this is called, the piece is at some location in the board.
     This advances the piece to be at its next location.
-
     Overriden by the brain when it plays.
      */
     public void tick(int verb) {
@@ -381,7 +378,6 @@ implements Brain {
         double avgHeight = ((double)sumHeight)/width;
 
         int heightDiff = maxHeight - minHeight;
-
 
         // Add up the counts to make an overall score
         // The weights, 8, 40, etc., are just made up numbers that appear to work

@@ -1,7 +1,7 @@
 #BlueJ class context
 comment0.target=DJBrainNoGraphics
-comment1.params=w\ h\ w1\ w2\ w3\ w4\ w5\ w6\ w7\ w8
-comment1.target=DJBrainNoGraphics(int,\ int,\ double,\ double,\ double,\ double,\ double,\ double,\ double,\ double)
+comment1.params=w\ h\ w1\ w2\ w3\ w4\ w5\ w6
+comment1.target=DJBrainNoGraphics(int,\ int,\ double,\ double,\ double,\ double,\ double,\ double)
 comment10.params=i
 comment10.target=void\ changeHeightDiffWeight(int)
 comment11.params=i
@@ -13,7 +13,7 @@ comment13.target=double\ rateBoard(Board)
 comment13.text=\n\ \ \ \ A\ simple\ brain\ function.\n\ \ \ \ Given\ a\ board,\ produce\ a\ number\ that\ rates\n\ \ \ \ that\ board\ position\ --\ larger\ numbers\ for\ worse\ boards.\n\ \ \ \ This\ version\ just\ counts\ the\ height\n\ \ \ \ and\ the\ number\ of\ "holes"\ in\ the\ board.\n\ \ \ \ See\ Tetris-Architecture.html\ for\ brain\ ideas.\n
 comment2.params=verb
 comment2.target=void\ tick(int)
-comment2.text=\n\ \ \ \ Called\ to\ change\ the\ position\ of\ the\ current\ piece.\n\ \ \ \ Each\ key\ press\ call\ this\ once\ with\ the\ verbs\n\ \ \ \ LEFT\ RIGHT\ ROTATE\ DROP\ for\ the\ user\ moves,\n\ \ \ \ and\ the\ timer\ calls\ it\ with\ the\ verb\ DOWN\ to\ move\n\ \ \ \ the\ piece\ down\ one\ square.\n\n\ \ \ \ Before\ this\ is\ called,\ the\ piece\ is\ at\ some\ location\ in\ the\ board.\n\ \ \ \ This\ advances\ the\ piece\ to\ be\ at\ its\ next\ location.\n\n\ \ \ \ Overriden\ by\ the\ brain\ when\ it\ plays.\n
+comment2.text=\n\ \ \ \ Called\ to\ change\ the\ position\ of\ the\ current\ piece.\n\ \ \ \ Each\ key\ press\ call\ this\ once\ with\ the\ verbs\n\ \ \ \ LEFT\ RIGHT\ ROTATE\ DROP\ for\ the\ user\ moves,\n\ \ \ \ and\ the\ timer\ calls\ it\ with\ the\ verb\ DOWN\ to\ move\n\ \ \ \ the\ piece\ down\ one\ square.\n\ \ \ \ Before\ this\ is\ called,\ the\ piece\ is\ at\ some\ location\ in\ the\ board.\n\ \ \ \ This\ advances\ the\ piece\ to\ be\ at\ its\ next\ location.\n\ \ \ \ Overriden\ by\ the\ brain\ when\ it\ plays.\n
 comment3.params=
 comment3.target=Piece\ pickNextPiece()
 comment3.text=\n\ \ \ \ Selects\ the\ next\ piece\ to\ use\ using\ the\ random\ generator\n\ \ \ \ set\ in\ startGame().\ \ Updated\ to\ check\ on\ adversary\n

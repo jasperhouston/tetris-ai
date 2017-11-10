@@ -33,9 +33,7 @@ public class PSO {
     /****   Dimension order:
     maximum column height (maxHeight)
     difference between min and max column height (heightDiff)
-    average column height (avgHeight)
     number of holes (numHoles)
-    number of tiles (numTiles)
     aggregate height (aggrHeight)
     complete lines (compLines)
     bumpiness measure (bumpiness)
@@ -43,18 +41,14 @@ public class PSO {
     /****   Initial value ranges:
     maxHeight: -1 to 1 (double)
     heightDiff: -1 to 1 (double)
-    avgHeight: -1 to 1 (double)
     numHoles: -1 to 1 (double)
-    numTiles: -1 to 1 (double)
     aggrHeight: -1 to 1 (double)
     compLines: -1 to 1 (double)
     bumpiness: -1 to 1 (double)
      */
     public double[] maxHeightInitList = {-1.0, 1.0};
     public double[] heightDiffInitList = {-1.0, 1.0};
-    public double[] avgHeightInitList = {-1.0, 1.0};
     public double[] numHolesInitList = {-1.0, 1.0};
-    public double[] numTilesInitList = {-1.0, 1.0};
     public double[] aggrHeightInitList = {-1.0, 1.0};
     public double[] compLinesInitList = {-1.0, 1.0};
     public double[] bumpinessInitList = {-1.0, 1.0};   
@@ -65,7 +59,7 @@ public class PSO {
     public PSO(int swarmSize, int iterations) {
         this.swarmSize = swarmSize;
         this.iterations = iterations;
-        this.dimension = 5;
+        this.dimension = 6;
         gBestValue = 0.0;
 
         gBest = new Vector<Double>(0);
@@ -84,22 +78,10 @@ public class PSO {
         posRandom = total * ratio + heightDiffInitList[0];
         gBest.add(posRandom);
 
-        //avgHeightWeight
-        total = avgHeightInitList[1] - avgHeightInitList[0];
-        ratio = ThreadLocalRandom.current().nextDouble(0, 1);
-        posRandom = total * ratio + avgHeightInitList[0];
-        gBest.add(posRandom);
-
         //numHolesWeight
         total = numHolesInitList[1] - numHolesInitList[0];
         ratio = ThreadLocalRandom.current().nextDouble(0, 1);
         posRandom = total * ratio + numHolesInitList[0];
-        gBest.add(posRandom);
-
-        //numTilesWeight
-        total = numTilesInitList[1] - numTilesInitList[0];
-        ratio = ThreadLocalRandom.current().nextDouble(0, 1);
-        posRandom = total * ratio + numTilesInitList[0];
         gBest.add(posRandom);
         
         //aggrHeightWeight
@@ -226,18 +208,16 @@ public class PSO {
 
         double maxHeightWeight = p.position.get(0);
         double heightDiffWeight = p.position.get(1);
-        double avgHeightWeight = p.position.get(2);
-        double numHolesWeight = p.position.get(3);
-        double numTilesWeight = p.position.get(4);
-        double aggrHeightWeight = p.position.get(5);
-        double compLinesWeight = p.position.get(6);
-        double bumpinessWeight = p.position.get(7);
-        //System.out.println(maxHeightWeight + " " + heightDiffWeight + " " + avgHeightWeight + " " + numHolesWeight + " " + numTilesWeight);
+        double numHolesWeight = p.position.get(2);
+        double aggrHeightWeight = p.position.get(3);
+        double compLinesWeight = p.position.get(4);
+        double bumpinessWeight = p.position.get(5);
+
         // TODO here we need to run an evaluation
         final int pixels = 16;
         final double trials = 50.0;
         DJBrainNoGraphics tetris = new DJBrainNoGraphics(WIDTH*pixels+2, (HEIGHT+TOP_SPACE)*pixels+2, 
-            maxHeightWeight, heightDiffWeight, avgHeightWeight, numHolesWeight, numTilesWeight, aggrHeightWeight, compLinesWeight, bumpinessWeight);
+            maxHeightWeight, heightDiffWeight, numHolesWeight, aggrHeightWeight, compLinesWeight, bumpinessWeight);
             
         // In this we're just running a fixed number of trials and outputting how many pieces we
         // got before losing in each trial
@@ -302,7 +282,10 @@ public class PSO {
             }
 
             updateRandomNeighborhood();
-            System.out.println("gBest = " + gBestValue + " iteration " + (iterations - iterRemaining) + " \n");
+            System.out.println("best value = " + gBestValue + " iteration " + (iterations - iterRemaining) + " \n");
+            for (int i = 0; i < gBest.size(); i++) {
+                System.out.println(gBest.get(i) + " ");
+            }
             
             iterRemaining--;
         }
