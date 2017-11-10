@@ -1,6 +1,5 @@
 #BlueJ class context
 comment0.target=DJBrain
-comment0.text=\nA\ simple\ Brain\ implementation.\nbestMove()\ iterates\ through\ all\ the\ possible\ x\ values\nand\ rotations\ to\ play\ a\ particular\ piece\ (there\ are\ only\naround\ 10-30\ ways\ to\ play\ a\ piece).\n\nFor\ each\ play,\ it\ uses\ the\ rateBoard()\ message\ to\ rate\ how\ngood\ the\ resulting\ board\ is\ and\ it\ just\ remembers\ the\nplay\ with\ the\ lowest\ score.\ Undo()\ is\ used\ to\ back-out\neach\ play\ before\ trying\ the\ next.\ To\ experiment\ with\ writing\ your\ own\nbrain\ --\ just\ subclass\ off\ LameBrain\ and\ override\ rateBoard().\n
 comment1.params=board\ piece\ limitHeight\ move
 comment1.target=Brain.Move\ bestMove(Board,\ Piece,\ int,\ Brain.Move)
 comment2.params=board

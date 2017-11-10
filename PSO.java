@@ -36,22 +36,31 @@ public class PSO {
     average column height (avgHeight)
     number of holes (numHoles)
     number of tiles (numTiles)
+    aggregate height (aggrHeight)
+    complete lines (compLines)
+    bumpiness measure (bumpiness)
      */
     /****   Initial value ranges:
-    maxHeight: 1-20 (double?)
-    heightDiff: 1-20 (double?)
-    avgHeight: 1-20 (double?)
-    numHoles: 1-20 (double?)
-    numTiles: 1-20 (double?)
+    maxHeight: -1 to 1 (double)
+    heightDiff: -1 to 1 (double)
+    avgHeight: -1 to 1 (double)
+    numHoles: -1 to 1 (double)
+    numTiles: -1 to 1 (double)
+    aggrHeight: -1 to 1 (double)
+    compLines: -1 to 1 (double)
+    bumpiness: -1 to 1 (double)
      */
-    public double[] maxHeightInitList = {0.0, 1.0};
-    public double[] heightDiffInitList = {0.0, 1.0};
-    public double[] avgHeightInitList = {0.0, 1.0};
-    public double[] numHolesInitList = {0.0, 1.0};
-    public double[] numTilesInitList = {0.0, 1.0};
+    public double[] maxHeightInitList = {-1.0, 1.0};
+    public double[] heightDiffInitList = {-1.0, 1.0};
+    public double[] avgHeightInitList = {-1.0, 1.0};
+    public double[] numHolesInitList = {-1.0, 1.0};
+    public double[] numTilesInitList = {-1.0, 1.0};
+    public double[] aggrHeightInitList = {-1.0, 1.0};
+    public double[] compLinesInitList = {-1.0, 1.0};
+    public double[] bumpinessInitList = {-1.0, 1.0};   
 
-    private double PHI_1 = .6;
-    private double PHI_2 = .85;
+    private double PHI_1 = 2.05;
+    private double PHI_2 = 2.05;
 
     public PSO(int swarmSize, int iterations) {
         this.swarmSize = swarmSize;
@@ -91,6 +100,24 @@ public class PSO {
         total = numTilesInitList[1] - numTilesInitList[0];
         ratio = ThreadLocalRandom.current().nextDouble(0, 1);
         posRandom = total * ratio + numTilesInitList[0];
+        gBest.add(posRandom);
+        
+        //aggrHeightWeight
+        total = aggrHeightInitList[1] - aggrHeightInitList[0];
+        ratio = ThreadLocalRandom.current().nextDouble(0, 1);
+        posRandom = total * ratio + aggrHeightInitList[0];
+        gBest.add(posRandom);
+        
+        //compLinesWeight
+        total = compLinesInitList[1] - compLinesInitList[0];
+        ratio = ThreadLocalRandom.current().nextDouble(0, 1);
+        posRandom = total * ratio + compLinesInitList[0];
+        gBest.add(posRandom);
+        
+        //numTilesWeight
+        total = bumpinessInitList[1] - bumpinessInitList[0];
+        ratio = ThreadLocalRandom.current().nextDouble(0, 1);
+        posRandom = total * ratio + bumpinessInitList[0];
         gBest.add(posRandom);
     }
 
@@ -202,12 +229,15 @@ public class PSO {
         double avgHeightWeight = p.position.get(2);
         double numHolesWeight = p.position.get(3);
         double numTilesWeight = p.position.get(4);
+        double aggrHeightWeight = p.position.get(5);
+        double compLinesWeight = p.position.get(6);
+        double bumpinessWeight = p.position.get(7);
         //System.out.println(maxHeightWeight + " " + heightDiffWeight + " " + avgHeightWeight + " " + numHolesWeight + " " + numTilesWeight);
         // TODO here we need to run an evaluation
         final int pixels = 16;
         final double trials = 50.0;
         DJBrainNoGraphics tetris = new DJBrainNoGraphics(WIDTH*pixels+2, (HEIGHT+TOP_SPACE)*pixels+2, 
-            maxHeightWeight, heightDiffWeight, avgHeightWeight, numHolesWeight, numTilesWeight);
+            maxHeightWeight, heightDiffWeight, avgHeightWeight, numHolesWeight, numTilesWeight, aggrHeightWeight, compLinesWeight, bumpinessWeight);
             
         // In this we're just running a fixed number of trials and outputting how many pieces we
         // got before losing in each trial

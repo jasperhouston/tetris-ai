@@ -11,6 +11,8 @@ each play before trying the next. To experiment with writing your own
 brain -- just subclass off LameBrain and override rateBoard().
  */
 
+import static java.lang.Math.*;
+
 public class DJBrain implements Brain {
     /**
     Given a piece and a board, returns a move object that represents
@@ -82,7 +84,7 @@ public class DJBrain implements Brain {
         final int width = board.getWidth();
         final int maxHeight = board.getMaxHeight();
 
-        int sumHeight = 0;
+        int aggrHeight = 0;
         int numHoles = 0;
         int numTiles = 0;
         int minHeight = board.getHeight();
@@ -90,7 +92,7 @@ public class DJBrain implements Brain {
         // Count the holes, and sum up the heights
         for (int x = 0; x < width; x++) {
             final int colHeight = board.getColumnHeight(x);
-            sumHeight += colHeight;
+            aggrHeight += colHeight;
 
             if (colHeight < minHeight) {
                 minHeight = colHeight;
@@ -110,17 +112,71 @@ public class DJBrain implements Brain {
                 }
                 y--;
             }
-            
         }
 
-        double avgHeight = ((double)sumHeight)/width;
+        // calculates the number of complete lines
+        int compLines = 0;
+        for (int i = 0; i < board.getColumnHeight(0); i++) {
+            int flag = 1;
+            for (int col = 0; col < width; col++) {
+                if (!board.getGrid(col,i)) {
+                    flag = 0;
+                }
+            }
+            if (flag == 1) {
+                compLines++;
+            }
+        }
+        
+        int bumpiness = 0;
+        for (int x = 0; x < width - 1; x++) {
+            int colHeight = board.getColumnHeight(x);
+            int nextColHeight = board.getColumnHeight(x+1);
+            int diff = abs(colHeight - nextColHeight);
+            bumpiness += diff;
+        }
+        
+        
+        double avgHeight = ((double)aggrHeight)/width;
 
         int heightDiff = maxHeight - minHeight;
+        
+        /*
+         * Weights from PSO in order FRI 11/10 2:00pm
+         * -0.44346902440765756 
+         * 0.39527698322920757 
+         * 0.5447275743312467 
+         * -0.6381522785249643 
+         * -0.1691071165301019 
+         * 0.8802180907013148 
+         * -0.7601478234756451 
+         * 0.7922777950537594 
+         */
+        
+        // comment this block out when training
+        /*
+        weights.maxHeightWeight = -0.44346902440765756;
+        weights.avgHeightWeight = 0.39527698322920757;
+        weights.numHolesWeight = 0.5447275743312467;
+        weights.heightDiffWeight = -0.6381522785249643;
+        weights.numTilesWeight = -0.1691071165301019;
+        weights.aggrHeightWeight = 0.8802180907013148;
+        weights.compLinesWeight = -0.7601478234756451;
+        weights.bumpinessWeight = 0.7922777950537594;
 
+        return (-0.44346902440765756*maxHeight + 0.39527698322920757*avgHeight + 
+            0.5447275743312467*numHoles + -0.6381522785249643*heightDiff + 
+            -0.1691071165301019*numTiles + 0.8802180907013148*aggrHeight +
+            -0.7601478234756451*compLines + 0.7922777950537594*bumpiness);
+        */
+        
+        
         // Add up the counts to make an overall score
         // The weights, 8, 40, etc., are just made up numbers that appear to work
         return (weights.maxHeightWeight*maxHeight + weights.avgHeightWeight*avgHeight + 
             weights.numHolesWeight*numHoles + weights.heightDiffWeight*heightDiff + 
-            weights.numTilesWeight*numTiles);
+            weights.numTilesWeight*numTiles + weights.aggrHeightWeight*aggrHeight +
+            weights.compLinesWeight*compLines + weights.bumpinessWeight*bumpiness);
+        
     }
 }

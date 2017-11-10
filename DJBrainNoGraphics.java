@@ -36,12 +36,12 @@ implements Brain {
     public final int MAXGAMES = 10000;
     public final boolean OPTIMIZING = true;
 
-    public DJBrainNoGraphics(int w, int h, double w1, double w2, double w3, double w4, double w5) {
+    public DJBrainNoGraphics(int w, int h, double w1, double w2, double w3, double w4, double w5, double w6, double w7, double w8) {
         super(w, h);
         brainActive = true;
         previousCount = count;
         brains = new DJBrain();
-        DJBrain.weights.setWeights(w1, w2, w3, w4, w5);
+        DJBrain.weights.setWeights(w1, w2, w3, w4, w5, w6, w7, w8);
         gamesPlayed = 0;
         drop = true;
         myOpponent = this; //new Sith(false);

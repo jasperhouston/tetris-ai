@@ -7,13 +7,19 @@ public interface Brain {
         public double avgHeightWeight;
         public double numHolesWeight;
         public double numTilesWeight;
+        public double aggrHeightWeight;
+        public double compLinesWeight;
+        public double bumpinessWeight;
         
-        public void setWeights(double w1, double w2, double w3, double w4, double w5) {
+        public void setWeights(double w1, double w2, double w3, double w4, double w5, double w6, double w7, double w8) {
             this.maxHeightWeight = w1;
             this.heightDiffWeight = w2;
             this.avgHeightWeight = w3;
             this.numHolesWeight = w4;
             this.numTilesWeight = w5;
+            this.aggrHeightWeight = w6;
+            this.compLinesWeight = w7;
+            this.bumpinessWeight = w8;
         }
     }
     

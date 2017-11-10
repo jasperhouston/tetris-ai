@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 public class WeightCalc
 {
     public static void main(String[] args) {
-        PSO alg = new PSO(10, 5000);
+        PSO alg = new PSO(10, 1000);
         Vector<Double> results = alg.solvePSO();
         for (int i = 0; i < results.size(); i++) {
             System.out.println(results.get(i) + " ");
