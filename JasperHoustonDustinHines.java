@@ -132,22 +132,32 @@ public class JasperHoustonDustinHines implements Brain {
         int heightDiff = maxHeight - minHeight;
 
         /*
-         * -0.48066488265545804 
-         * 0.10157950528082726 
-         * -0.9180123175701203 
-         * -0.982131790252937 
-         * -0.6003651108181332 
-         * 0.8978072509941408  
+         * avg to 1366.1
+         * -0.05256527339794359 
+         * 0.34753233879086975 
+         * -0.031297623284534115 
+         * -0.9617748409232472 
+         * -0.2799938070564869 
+         * 0.6083754574746092 
+         * 
+         * avg to 869.76
+         * -0.41398136482995906 
+         * 0.6054612115863476 
+         * 0.16080502183459777 
+         * 0.6490862772559587 
+         * 0.1582071590848 
+         * 0.31052851683032534 
+         * 
          */
 
         // comment this block out when training
 
-        weights.maxHeightWeight = .07;
-        weights.numHolesWeight = .40;
-        weights.heightDiffWeight = .01;
-        weights.aggrHeightWeight = .02;
-        weights.compLinesWeight = -.50;
-        weights.bumpinessWeight = .05;
+        weights.maxHeightWeight = -0.41398136482995906;
+        weights.numHolesWeight = 0.6054612115863476;
+        weights.heightDiffWeight = 0.16080502183459777;
+        weights.aggrHeightWeight = 0.6490862772559587;
+        weights.compLinesWeight = 0.1582071590848;
+        weights.bumpinessWeight = 0.31052851683032534;
 
         /*
         return (-0.44346902440765756*maxHeight + 0.39527698322920757*avgHeight + 
