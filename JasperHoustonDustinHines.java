@@ -132,56 +132,37 @@ public class JasperHoustonDustinHines implements Brain {
         int heightDiff = maxHeight - minHeight;
 
         /*
-         * avg to 1366.1
-         * -0.05256527339794359 
-         * 0.34753233879086975 
-         * -0.031297623284534115 
-         * -0.9617748409232472 
-         * -0.2799938070564869 
-         * 0.6083754574746092 
+         * avg to 869.76 from PSO
+         * weights.maxHeightWeight = -0.41398136482995906;
+         * weights.numHolesWeight = 0.6054612115863476;
+         * weights.heightDiffWeight = 0.16080502183459777;
+         * weights.aggrHeightWeight = 0.6490862772559587;
+         * weights.compLinesWeight = 0.1582071590848;
+         * weights.bumpinessWeight = 0.31052851683032534;
          * 
-         * avg to 869.76
-         * -0.41398136482995906 
-         * 0.6054612115863476 
-         * 0.16080502183459777 
-         * 0.6490862772559587 
-         * 0.1582071590848 
-         * 0.31052851683032534 
+         * After running Hill Climbing for a while
+         * weights.maxHeightWeight = -223981;
+         * weights.numHolesWeight = 855461;
+         * weights.heightDiffWeight = 210805;
+         * weights.aggrHeightWeight = 679086;
+         * weights.compLinesWeight = -248207;
+         * weights.bumpinessWeight = 300528;
          * 
-         */
-
-        // comment this block out when training
-
-        weights.maxHeightWeight = -0.41398136482995906;
-        weights.numHolesWeight = 0.6054612115863476;
-        weights.heightDiffWeight = 0.16080502183459777;
-        weights.aggrHeightWeight = 0.6490862772559587;
-        weights.compLinesWeight = 0.1582071590848;
-        weights.bumpinessWeight = 0.31052851683032534;
-
-        /*
-        return (-0.44346902440765756*maxHeight + 0.39527698322920757*avgHeight + 
-        0.5447275743312467*numHoles + -0.6381522785249643*heightDiff + 
-        -0.1691071165301019*numTiles + 0.8802180907013148*aggrHeight +
-        -0.7601478234756451*compLines + 0.7922777950537594*bumpiness);
-         */
-        /*
-        weights.setWeights(-0.44346902440765756, 0.39527698322920757, 0.5447275743312467, -0.6381522785249643, 
-        -0.1691071165301019, 0.8802180907013148, -0.7601478234756451, 0.7922777950537594);
-         */ 
-        /*
-        System.out.println("Max Height: " + maxHeight);
-        System.out.println("Num Holes: " + numHoles);
-        System.out.println("Height Difference: " + heightDiff);
-        System.out.println("Aggregate Height: " + aggrHeight);
-        System.out.println("Complete lines: " + compLines);
-        System.out.println("bumpiness: " + bumpiness);
+         * just hill climbing
+         * 
         */
+       
+        weights.maxHeightWeight = -223981;
+        weights.numHolesWeight = 855461;
+        weights.heightDiffWeight = 210805;
+        weights.aggrHeightWeight = 679086;
+        weights.compLinesWeight = -248207;
+        weights.bumpinessWeight = 300528;
+
         // Add up the counts to make an overall score
         double boardRating = (weights.maxHeightWeight*maxHeight + weights.numHolesWeight*numHoles +
                 weights.heightDiffWeight*heightDiff + weights.aggrHeightWeight*aggrHeight +
                 weights.compLinesWeight*compLines + weights.bumpinessWeight*bumpiness);
-        //System.out.println(boardRating);
         return (boardRating);
 
     }
